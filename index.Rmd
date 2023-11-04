@@ -22,6 +22,9 @@ overdoseRates <- read_sheet("https://docs.google.com/spreadsheets/d/135BpS8CTn1L
 overdoseRates
 ```
 
+
+## Milestone 3 
+
 ```{r}
 library(ggplot2)
 
@@ -37,6 +40,4 @@ milestone_3
 
 ```
 
-
-## First Visualization for Milestone 3
 
