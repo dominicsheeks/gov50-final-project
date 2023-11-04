@@ -1,7 +1,7 @@
 ---
 title: "Gov 50 Final Project"
 author: "Dominic Sheeks"
-description: "My final project"
+description: "My Final Project"
 output:
   distill::distill_article:
     self_contained: false
@@ -21,4 +21,17 @@ overdoseRates <- read_sheet("https://docs.google.com/spreadsheets/d/135BpS8CTn1L
 
 overdoseRates
 ```
+
+```{r}
+library(ggplot2)
+
+ggplot(data = overdoseRates,
+       mapping = aes(x = Year,
+                     y = synth_opioid_analgesics)) +
+  geom_point(color = "blue") +
+  geom_smooth() +
+  labs(x = "Year",
+       y = "Death Rate by Synth Opioids - Fetanyl")
+```
+
 
