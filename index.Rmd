@@ -38,5 +38,5 @@ milestone_3
 ```
 
 
-## First Visualization for Milestone 3
+## First Visualization: Milestone 3
 
