@@ -23,7 +23,7 @@ overdoseRates
 ```
 
 
-## Milestone 3 
+## Milestone 3: Visualization
 
 ```{r}
 library(ggplot2)
@@ -39,7 +39,6 @@ milestone_3 <- ggplot(data = overdoseRates,
 milestone_3
 
 ```
-
 
 
 
