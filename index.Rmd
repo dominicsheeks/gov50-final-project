@@ -25,13 +25,16 @@ overdoseRates
 ```{r}
 library(ggplot2)
 
-ggplot(data = overdoseRates,
+milestone_3 <- ggplot(data = overdoseRates,
        mapping = aes(x = Year,
                      y = synth_opioid_analgesics)) +
   geom_point(color = "blue") +
   geom_smooth() +
   labs(x = "Year",
        y = "Death Rate by Synth Opioids - Fetanyl")
+
+milestone_3
+
 ```
 
 
