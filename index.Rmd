@@ -23,7 +23,7 @@ overdoseRates
 ```
 
 
-## Milestone 3: Visualization
+## Milestone 3: Visual Dist.
 
 ```{r}
 library(ggplot2)
