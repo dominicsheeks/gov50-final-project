@@ -38,4 +38,4 @@ milestone_3
 ```
 
 
-## First Visualization - M3
+## First Visualization
