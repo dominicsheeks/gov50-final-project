@@ -34,11 +34,26 @@ milestone_3 <- ggplot(data = overdoseRates,
   geom_point(color = "blue") +
   geom_smooth() +
   labs(x = "Year",
-       y = "Death Rate by Synth Opioids - Fetanyl")
+       y = "Death Rate by Synth Opioids - Fetanyl",
+       title = "Synthetic Opioid Overdose Fatality Rates - Fetanyl Included")
 
 milestone_3
 
 ```
+
+```{r}
+milestone_4 <- ggplot(data = overdoseRates,
+       mapping = aes(x = Year,
+                     y = heroin)) +
+  geom_point(color = "red") +
+  geom_smooth(color = "red") +
+  labs(x = "Year",
+       y = "Death Rate by Heroin",
+       title = "Heroin Overdose Fatality Rates")
+
+milestone_4
+```
+## As seen in the graphs above, fatal heroin overdose rates begin to drastically increase around 2010, peaking around 2019. But in 2020, heroin overdose fatality rates began to decline. It wasn't until 2015, however, that the deaths of synthetic opioids began to drastically increase, continuing to surge in 2020 without show of stopping.   
 
 
 
