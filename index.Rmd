@@ -53,7 +53,7 @@ milestone_4 <- ggplot(data = overdoseRates,
 
 milestone_4
 ```
-## As seen in the graphs above, fatal heroin overdose rates begin to drastically increase around 2010, peaking around 2019. But in 2020, heroin overdose fatality rates began to decline. It wasn't until 2015, however, that the deaths of synthetic opioids began to drastically increase, continuing to surge in 2020 without show of stopping.   
+## As seen in the graphs above, fatal heroin overdose rates begin to drastically increase around 2010, peaking around 2019. But in 2020, heroin overdose fatality rates began to decline. It wasn't until 2015, however, that the deaths of synthetic opioids began to drastically increase, continuing to surge in 2020 without sign of stopping.   
 
 
 
