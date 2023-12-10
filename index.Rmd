@@ -1,7 +1,7 @@
 ---
 title: "Gov 50 Final Project"
 author: "Dominic Sheeks"
-description: "My Final Project"
+description: "Opioid Fatality Rates"
 output:
   distill::distill_article:
     self_contained: false
@@ -9,51 +9,96 @@ output:
 
 
 
-## Project Proposal
+## Introduction
 
-In the United States, has the increased usage of narcotic analgesics – like fentanyl – decreased the number of heroin-related overdose fatalities? In this project, I will compare the by-the-year numbers (from 1999 to 2020) of overdose deaths caused by each of these opioids, making note of any significant correlations between the two. It is my prediction that as the availability of fentanyl and other synthetic analgesics increased, the use of heroin and other opioids will have decreased, thus resulting in lower fatal overdoses due to heroin. My dataset, provided by the CDC – coded as ‘overdoseRates’ – spans over the aforementioned years and analyzes the U.S. as a whole. The main variable of interest is deaths caused by synthetic opioid analgesics (coded as ‘synth_opioid_analgesics’), with the independent variable in question being fatal heroin overdoses (coded as ‘heroin’). Both variables operate on a percent-per-100k-people basis: “1” being one percent of said people, and “20” meaning twenty percent of 100,000 people. To compare the correlation between the two variables, I will have to look at variable ‘Year’. If the variable ‘Year’ has a positive correlation with the variable ‘synth_opiod_analgesics’  but a negative correlation with ‘heroin’, this would support my hypothesis. However, there may be other factors that contribute to the increase or decrease in the percent of overdose fatalities with regard to a given opioid.
+In recent years, has the increased use of narcotic analgesics like fentanyl decreased the number of fatal heroin overdoes? This project will compare the number of overdose deaths caused by each of these opioids from the years 1999 to 2020 to determine any significant correlation between the two. The predicted result is that as the availability of fentanyl and other synthetic analgesics increased, the use of heroin will have decreased, thus resulting in lower fatal overdoses due to heroin. If so, this project will highlight a new revelation within the somber reality that is the United States' ever-growing opioid epidemic -- an emergence of an evil never seen before.
 
+
+# Data Section
+
+The data set in use -- coded as 'overdoseRates' -- is provided by the CDC and analyzes overdose fatality rates in the U.S. as a whole over the years 1999 to 2020. This data set was merged into R Studio via the 'googlesheets4' package. The main variable of interest is deaths caused by synthetic opioid analgesics (coded as ‘synth_opioid_analgesics’), with the independent variable in-question being fatal heroin overdoses (coded as ‘heroin’). Both variables operate on a percent-per-100k-people basis: “1” being one percent of said people, and “20” meaning twenty percent of 100,000 people. To compare the correlation between the two variables, this project will look at variable ‘Year’. If ‘Year’ has a positive correlation with the variable ‘synth_opiod_analgesics' but a negative correlation with ‘heroin’, the hypothesis that the increased use of narcotic analgesics has decreased the number of heroin-caused fatal overdoses will be supported.
 
 ```{r}
 library(googlesheets4)
+## Loading 'googlesheets4' package.
 
 overdoseRates <- read_sheet("https://docs.google.com/spreadsheets/d/135BpS8CTn1LdcUvf7ZwK6GIKSt-LyIPJ_uqbSWqwYgo/edit#gid=0")
+## Loading data into R.
 
 overdoseRates
+## Producing a tibble of loaded data.
 ```
 
+Produced below is a scatterplot mapping the main variable 'synth_opioid_analgesics':
 
-## Milestone 3: Visual Dist.
+
+```{r}
+library(ggplot2)
+## Loading 'ggplot2' package.
+
+mainvar_plot <- ggplot(data = overdoseRates,
+       mapping = aes(x = Year,
+                     y = synth_opioid_analgesics)) +
+  geom_point(color = "black") +
+  geom_smooth(color = "red") +
+  labs(x = "Year",
+       y = "Death Rate Per-100k People by Synth. Opioids",
+       title = "Fatal Overdose Rates of Synthetic Opioids, including Fetanyl")
+## Assigning plot of main variable to 'mainvar_plot'.
+
+
+mainvar_plot
+## Producting scatterplot of main variable.
+```
+
+As seen in the above scatterplot, the amount of fatal overdoses caused by synthetic opioids remained relativity low until 2013, after which point synthetic opioid overdoses began to prove more and more fatal each year. For reference: the percent of fatal overdoses for 'synth_opioid_analgesics' was 1% of 100k people in 2013 -- a maximum that had previously only been hit in 2009 and 2010. In 2014, however, this percent grew to 1.8. In 2017: 9.0. And in 2020, 17.8. 
+
+
+## Results Section
+
+
+Now, the variable 'heroin' will be added to the scatterplot -- represented by the dashed blue line. The solid red line will still represent 'synth_opioid_analgesics'. Compiling both variables into one scatterplot will demonstrate if there is any correlation between the aforementioned opioids 
+
 
 ```{r}
 library(ggplot2)
 
-milestone_3 <- ggplot(data = overdoseRates,
-       mapping = aes(x = Year,
-                     y = synth_opioid_analgesics)) +
-  geom_point(color = "blue") +
-  geom_smooth() +
+combined_plot <- ggplot(overdoseRates, aes(x = Year)) +
+  geom_point(aes(y = synth_opioid_analgesics), 
+             linetype = "solid") +
+  geom_smooth(aes(y = synth_opioid_analgesics, 
+                  color = "red"), linetype = "solid") +
+  geom_point(aes(y = heroin), 
+             linetype = "dashed") +
+  geom_smooth(aes(y = heroin), 
+              linetype = "dashed") +
   labs(x = "Year",
-       y = "Death Rate by Synth Opioids - Fetanyl",
-       title = "Synthetic Opioid Overdose Fatality Rates - Fetanyl Included")
+       y = "Death Rate Per-100k People by Opioids",
+       title = "Fatal Overdose Rates of Heroin (blue) and Synthetic Opioids (red)")
+## Adding 'heroin' variable to scatterplot.
 
-milestone_3
-
+combined_plot
+## Produced scatterplot with both y variables.
 ```
+
+From 2008 to 2014, heroin exceeds synthetic opioid analgesics in terms of their overdose fatality rates. And then around 2015, the two are on par with one another. After 2015, synthetic opioid overdose fatality rates increase at a drastic rate; those caused by heroin, however, begin to platue -- even decreasing from 2019 to 2020 from 4.4 percent to 4.1 percent. While, as of 2022, the percent of synthetic opioid fatalities has peaked at 17.8, heroin has only ever reached 4.9. The below regression table will further discover the relationship between the two opioid types:
+
 
 ```{r}
-milestone_4 <- ggplot(data = overdoseRates,
-       mapping = aes(x = Year,
-                     y = heroin)) +
-  geom_point(color = "red") +
-  geom_smooth(color = "red") +
-  labs(x = "Year",
-       y = "Death Rate by Heroin",
-       title = "Heroin Overdose Fatality Rates")
-
-milestone_4
+overdose_ate <- lm(synth_opioid_analgesics ~ heroin, 
+                   data = overdoseRates)
+summary(overdose_ate)
 ```
-## As seen in the graphs above, fatal heroin overdose rates begin to drastically increase around 2010, peaking around 2019. But in 2020, heroin overdose fatality rates began to decline. It wasn't until 2015, however, that the deaths of synthetic opioids began to drastically increase, continuing to surge in 2020 without sign of stopping.   
+```{r}
+modelsummary::modelsummary(overdose_ate,
+                           statistic = c("s.e. = {std.error}",
+                                         "p = {p.value}"),
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"))
+```
+
+As seen in the above regression table, 'heroin' has a coefficent of 2.185. This indicates a positive relationship between overdose fatality rates of heroin and those of synthetic opioid analgesics. The standard error is approximately 0.39, which is relatively small and indicates a rather accurate portrayl of the population mean. This checks out, as the CDC used the entire U.S. population to obtain the data used in this project. Lastly when observing the p value of 'heroin', it reads as less than 0.001. A small p value indicates a great statistical significance of the observed difference. Thus, there is strong evidence to support the hypothesis of an increased use synthetic opioid analgesics causing a decrease in heroin-caused fatal overdoses. 
 
 
+## Conclusion
 
+This project analyzed the relationship of overdose fatality rates between heroin and synthetic opioid analgesics like fetanyl from 1999 to 2020. In recent years, the fatality rates of synthetic opioids has drastically increased, while heroin's number have began to drop. The above scatterplots and regression table show a significant relationship between the two, supporting the idea that an increased use of synthetic opioids has caused a decreased usage of heroin -- thus decreasing the percent of fatal heroin-caused overdoses. However, this project may be restricted by the lack of information present for more current years -- 2021, 2022, and 2023 -- and that a more significant relationship may have presented itself had the years of focus only been from from 2014 onward. Also that this project did not take into account the use of commonly-prescribed opioids, which may also affect heroin's prevalence. With more time, the trend between heroin and fetanyl may become more visible. But in the meantime, one thing remains evident: America's opioid crisis is only getting worse. The fatal overdoses of all opioids should make clear a necessity for solutions aimed at shrinking these number as a whole, not just allowing one drug to overtake the next in terms of lives stolen. 
