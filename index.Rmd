@@ -23,7 +23,7 @@ library(googlesheets4)
 ## Loading 'googlesheets4' package.
 
 overdoseRates <- read_sheet("https://docs.google.com/spreadsheets/d/135BpS8CTn1LdcUvf7ZwK6GIKSt-LyIPJ_uqbSWqwYgo/edit#gid=0")
-## Loading data into R.
+## Loading merged data from CDC into R.
 
 overdoseRates
 ## Producing a tibble of loaded data.
@@ -48,7 +48,7 @@ mainvar_plot <- ggplot(data = overdoseRates,
 
 
 mainvar_plot
-## Producting scatterplot of main variable.
+## Producing scatterplot of main variable.
 ```
 
 As seen in the above scatterplot, the amount of fatal overdoses caused by synthetic opioids remained relativity low until 2013, after which point synthetic opioid overdoses began to prove more and more fatal each year. For reference: the percent of fatal overdoses for 'synth_opioid_analgesics' was 1% of 100k people in 2013 -- a maximum that had previously only been hit in 2009 and 2010. In 2014, however, this percent grew to 1.8. In 2017: 9.0. And in 2020, 17.8. 
@@ -88,15 +88,17 @@ From 2008 to 2014, heroin exceeds synthetic opioid analgesics in terms of their 
 overdose_ate <- lm(synth_opioid_analgesics ~ heroin, 
                    data = overdoseRates)
 summary(overdose_ate)
+## Producing raw regression table.
 ```
 ```{r}
 modelsummary::modelsummary(overdose_ate,
                            statistic = c("s.e. = {std.error}",
                                          "p = {p.value}"),
                            gof_map = c("nobs", "r.squared", "adj.r.squared"))
+## Producing nicely-formatted regression table for main independent variable 'heroin'.
 ```
 
-As seen in the above regression table, 'heroin' has a coefficent of 2.185. This indicates a positive relationship between overdose fatality rates of heroin and those of synthetic opioid analgesics. The standard error is approximately 0.39, which is relatively small and indicates a rather accurate portrayl of the population mean. This checks out, as the CDC used the entire U.S. population to obtain the data used in this project. Lastly when observing the p value of 'heroin', it reads as less than 0.001. A small p value indicates a great statistical significance of the observed difference. Thus, there is strong evidence to support the hypothesis of an increased use synthetic opioid analgesics causing a decrease in heroin-caused fatal overdoses. 
+As seen in the above regression table, 'heroin' has a coefficent of 2.185. This indicates a positive relationship between overdose fatality rates of heroin and those of synthetic opioid analgesics. The standard error is approximately 0.39, which is relatively small and indicates a rather accurate portrayl of the population mean. This checks out, as the CDC used the entire U.S. population to obtain the data used in this project. Lastly when observing the p value of 'heroin', it reads as less than 0.001. A small p value indicates a great statistical significance of the observed difference. Thus, there is strong evidence to support the hypothesis of an increased use of synthetic opioid analgesics causing a decrease in heroin-caused fatal overdoses. 
 
 
 ## Conclusion
